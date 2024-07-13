@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './App.css';
 
@@ -16,6 +16,19 @@ function App() {
   };
 
   const resetCount = () => setCount(0);
+
+  useEffect(() => {
+    console.log('useEffect 1 is executing......');
+    
+  }, [count]);
+
+  useEffect(() => {
+    console.log('useEffect 2 is executing......');
+  }, []);
+
+  useEffect(() => {
+    console.log('useEffect 3 is executing......');
+  });
 
   return (
     <div className="App">
