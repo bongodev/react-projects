@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { addProduct, getProducts, updateProduct } from '../services';
 
 export function useProducts() {
@@ -6,16 +6,19 @@ export function useProducts() {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const loadProducts = () =>
-    getProducts()
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const loadProducts = useCallback(() => {
+    getProducts(selectedCategories)
       .then((data) => setProducts(data))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
+  }, [selectedCategories]);
 
   useEffect(() => {
     setIsLoading(true);
     loadProducts();
-  }, []);
+  }, [loadProducts]);
 
   const refreshProducts = () => loadProducts();
 
@@ -37,7 +40,9 @@ export function useProducts() {
     error,
     isLoading,
     products,
+    selectedCategories,
     addOrUpdateProduct,
     refreshProducts,
+    setSelectedCategories,
   };
 }
