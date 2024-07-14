@@ -1,12 +1,8 @@
-import { useProducts } from '../../api/hooks';
-
 import { ProductCard } from './ProductCard';
 
 const ProductsEmptyState = () => <h1>No products to display</h1>;
 
-export const ProductGrid = () => {
-  const { error, isLoading, products } = useProducts();
-
+export const ProductGrid = ({ error, isLoading, products }) => {
   if (error) {
     return <div className="text-red-600">{'Failed to load data :('}</div>;
   }
