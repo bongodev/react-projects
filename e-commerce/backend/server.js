@@ -78,7 +78,23 @@ let products = [
 
 // Get all products
 app.get('/api/products', (req, res) => {
-  res.json(products);
+  const { category } = req.query;
+  let filters = [];
+  if (typeof category === 'string') {
+    filters = [category.toLowerCase()];
+  } else if (Array.isArray(category) && category.length) {
+    filters = category.map((category) => category.toLowerCase());
+  }
+  if (!filters.length) {
+    res.json(products);
+  }
+  res.json(
+    products.filter((product) =>
+      product.categories.some((category) =>
+        filters.includes(category.toLowerCase())
+      )
+    )
+  );
 });
 
 // Get a product by ID
