@@ -1,14 +1,16 @@
+import Header from "./components/Header";
+import Display from "./components/Display";
+import CounterButtons from "./components/CounterButtons";
+
 import "./App.css";
 
 function App() {
   return (
-    <div>
-      <div>
-        <h1 className="header">Counter App</h1>
-      </div>
-      <div>
-        <button>+</button>
-        <button>-</button>
+    <div className="bg-white shadow-lg rounded-lg p-8 text-center">
+      <Header />
+      <Display />
+      <div class="mt-6">
+        <CounterButtons />
       </div>
     </div>
   );
