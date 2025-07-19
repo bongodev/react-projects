@@ -1,23 +1,37 @@
-function MenuItem({ item }) {
+import clsx from "clsx";
+
+function MenuItem({ item, theme }) {
   return (
     <li>
-      <button className="w-full text-left p-2 rounded hover:bg-opacity-80 transition-colors hover:bg-gray-200">
+      <button
+        className={clsx(
+          "w-full text-left p-2 rounded hover:bg-opacity-80 transition-colors ",
+          theme === "light" && "hover:bg-gray-200",
+          theme === "dark" && "hover:bg-gray-600"
+        )}
+      >
         {item}
       </button>
     </li>
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({ theme }) {
   const menuItems = ["Dashboard", "Profile", "Settings", "Help"];
 
   return (
-    <aside className="w-64 p-4 transition-colors duration-300 bg-gray-50 text-gray-800">
+    <aside
+      className={clsx(
+        "w-64 p-4 transition-colors duration-300",
+        theme === "light" && "bg-gray-50 text-gray-800",
+        theme === "dark" && "bg-gray-700 text-white"
+      )}
+    >
       <nav>
         <h2 className="text-lg font-semibold mb-2">Menu</h2>
         <ul className="space-y-2">
           {menuItems.map((item) => (
-            <MenuItem key={item} item={item} />
+            <MenuItem key={item} item={item} theme={theme} />
           ))}
         </ul>
       </nav>
