@@ -1,11 +1,28 @@
+import clsx from "clsx";
+import useTheme from "../hooks/useTheme";
+
 export default function MainContent() {
+  const { theme } = useTheme();
+
   return (
-    <main className="flex-1 p-8 transition-colors duration-300 bg-white text-gray-800">
+    <main
+      className={clsx(
+        "flex-1 p-8 transition-colors duration-300",
+        theme === "light" && "bg-white text-gray-800",
+        theme === "dark" && "bg-gray-800 text-white"
+      )}
+    >
       <div className="max-w-2xl">
         <h2 className="text-3xl font-bold mb-6">
           Welcome to bongoDev's React Context API app
         </h2>
-        <div className="p-6 rounded-lg mb-6 bg-blue-50 border border-blue-200">
+        <div
+          className={clsx(
+            "p-6 rounded-lg mb-6",
+            theme === "light" && "bg-blue-50 border border-blue-200",
+            theme === "dark" && "bg-blue-900 border border-blue-700"
+          )}
+        >
           <h3 className="text-xl font-semibold mb-3">What you're seeing:</h3>
           <ul className="space-y-2">
             <li>
@@ -21,7 +38,13 @@ export default function MainContent() {
           </ul>
         </div>
 
-        <div className="p-6 rounded-lg bg-gray-50 border border-gray-200">
+        <div
+          className={clsx(
+            "p-6 rounded-lg bg-gray-50",
+            theme === "dark" && "bg-gray-50 border border-gray-200",
+            theme === "dark" && "bg-gray-700 border border-gray-600"
+          )}
+        >
           <h3 className="text-xl font-semibold mb-3">Update User Name:</h3>
           <div className="flex gap-3">
             <input
@@ -29,7 +52,11 @@ export default function MainContent() {
               value={""}
               onChange={() => {}}
               placeholder="Enter new name"
-              className="flex-1 p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white border-gray-300 text-gray-800"
+              className={clsx(
+                "flex-1 p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500",
+                theme === "light" && "bg-white border-gray-300 text-gray-800",
+                theme === "dark" && "bg-gray-800 border-gray-500 text-white"
+              )}
             />
             <button
               onClick={() => {}}
