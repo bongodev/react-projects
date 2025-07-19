@@ -1,5 +1,7 @@
 import clsx from "clsx";
 
+import useTheme from "../hooks/useTheme";
+
 function MenuItem({ item, theme }) {
   return (
     <li>
@@ -16,7 +18,8 @@ function MenuItem({ item, theme }) {
   );
 }
 
-export default function Sidebar({ theme }) {
+export default function Sidebar() {
+  const { theme } = useTheme();
   const menuItems = ["Dashboard", "Profile", "Settings", "Help"];
 
   return (
