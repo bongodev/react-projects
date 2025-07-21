@@ -1,4 +1,7 @@
-const Display = () => {
-    return <div className="text-3xl font-semibold text-black">0</div>
+const Display = ({ currentCount }) => {
+
+    console.log(`after ${currentCount}`);
+    
+    return <div className="text-3xl font-semibold text-black"> {currentCount} </div>
 }
 export default Display;
