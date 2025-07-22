@@ -1,16 +1,16 @@
 
-export default function CounterButtons({increment, decrement}) {
+export default function CounterButtons({incrementSubhanallah, incrementAlhamdulillah, incrementAllahuAkbar}) {
   return (
     <div className='flex space-x-10 text-white text-2xl'>
-      
+
         {/* Subhanallah */}
-        <button onClick={() => increment()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-blue-600 rounded-md hover:bg-slate-400'>Subhanallah</button>
+        <button onClick={() => incrementSubhanallah()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-emerald-500 hover:bg-emerald-600 rounded-md'>Subhanallah</button>
 
         {/* Alhamdulillah */}
-        <button onClick={() => decrement()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-red-600 rounded-md hover:bg-slate-400'>Alhamdulillah</button>
+        <button onClick={() => incrementAlhamdulillah()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-amber-500 hover:bg-amber-600 rounded-md'>Alhamdulillah</button>
 
         {/* Allahu Akbar */}
-        <button onClick={() => decrement()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-red-600 rounded-md hover:bg-slate-400'>Allahu Akbar</button>
+        <button onClick={() => incrementAllahuAkbar()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-indigo-500 hover:bg-indigo-600 rounded-md'>Allahu Akbar</button>
 
       </div>
   )
