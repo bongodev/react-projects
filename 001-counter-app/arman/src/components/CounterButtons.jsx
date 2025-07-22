@@ -1,5 +1,5 @@
 
-export default function CounterButtons({incrementSubhanallah, incrementAlhamdulillah, incrementAllahuAkbar}) {
+export default function CounterButtons({incrementSubhanallah, incrementAlhamdulillah, incrementAllahuAkbar, startAgain}) {
   return (
     <div className='flex space-x-10 text-white text-2xl'>
 
@@ -11,6 +11,9 @@ export default function CounterButtons({incrementSubhanallah, incrementAlhamduli
 
         {/* Allahu Akbar */}
         <button onClick={() => incrementAllahuAkbar()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-indigo-500 hover:bg-indigo-600 rounded-md'>Allahu Akbar</button>
+
+        {/* start again */}
+        <button onClick={() => startAgain()} className='cursor-pointer px-3 py-1 ring-2 ring-blue-500/50 bg-lime-500 hover:bg-indigo-600 rounded-md'>Start Again</button>
 
       </div>
   )
