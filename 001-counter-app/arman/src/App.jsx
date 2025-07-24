@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import CounterButtons from "./components/CounterButtons";
 import Display from "./components/Display";
@@ -15,36 +15,36 @@ function App() {
   const [resetGoalInput, setResetGoalInput] = useState(false);
 
   const increaseSubhanallah = () => {
-    if (total >= goalCount) {
-      alert("start again");
-      return;
-    }
     setSubhanallah((count) => count + 1);
     setTotal((count) => count + 1);
   };
+
   const increaseAlhamdulillah = () => {
-    if (total >= goalCount) {
-      alert("start again");
-      return;
-    }
+    if (total >= goalCount) return;
     setAlhamdulillah((count) => count + 1);
     setTotal((count) => count + 1);
   };
+
   const increaseAllahuAkbar = () => {
-    if (total >= goalCount) {
-      alert("start again");
-      return;
-    }
+    if (total >= goalCount) return;
     setAllahuAkbar((count) => count + 1);
     setTotal((count) => count + 1);
   };
+  useEffect(() => {
+    console.log("Inside useEffect");
+
+    if (goalCount > 0 && total >= goalCount) {
+      alert("🎉 Goal achieved! Please click 'Start Again'.");
+    }
+  }, [total, goalCount]);
+
   const startAgainBtn = () => {
     setSubhanallah(0);
     setAlhamdulillah(0);
     setAllahuAkbar(0);
     setGoalCount(10);
     result.innerText = "";
-    result.classList = '';
+    result.classList = "";
     setTotal(0);
     setResetGoalInput(true);
   };
@@ -60,7 +60,7 @@ function App() {
       <Header />
       {/* <GoalInput/> */}
       <div className="flex flex-col space-y-4">
-        <GoalInput onGoalChange={setGoalCount} resetInput={resetGoalInput}/>
+        <GoalInput onGoalChange={setGoalCount} resetInput={resetGoalInput} />
         <p className="text-2xl font-bold text-emerald-700 bg-emerald-100 px-4 py-2 rounded-lg shadow-sm inline-block mt-4">
           🎯 Current Goal: {goalCount}
         </p>
@@ -92,3 +92,29 @@ function App() {
 }
 
 export default App;
+
+// const increaseSubhanallah = () => {
+//   if (total >= goalCount) {
+//     alert("start again");
+//     return;
+//   }
+//   setSubhanallah((count) => count + 1);
+//   setTotal((count) => count + 1);
+// };
+
+// const increaseAlhamdulillah = () => {
+//   if (total >= goalCount) {
+//     alert("start again");
+//     return;
+//   }
+//   setAlhamdulillah((count) => count + 1);
+//   setTotal((count) => count + 1);
+// };
+// const increaseAllahuAkbar = () => {
+//   if (total >= goalCount) {
+//     alert("start again");
+//     return;
+//   }
+//   setAllahuAkbar((count) => count + 1);
+//   setTotal((count) => count + 1);
+// };
