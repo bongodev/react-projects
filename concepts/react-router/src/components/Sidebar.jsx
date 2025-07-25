@@ -1,11 +1,15 @@
 import clsx from "clsx";
+import { useNavigate } from "react-router";
 
 import useTheme from "../hooks/useTheme";
 
 function MenuItem({ item, theme }) {
+  const navigate = useNavigate();
+
   return (
     <li>
       <button
+        onClick={() => navigate(`/${item.toLowerCase()}`)}
         className={clsx(
           "w-full text-left p-2 rounded hover:bg-opacity-80 transition-colors ",
           theme === "light" && "hover:bg-gray-200",
