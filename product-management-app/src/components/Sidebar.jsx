@@ -24,7 +24,7 @@ function MenuItem({ item, theme }) {
 
 export default function Sidebar() {
   const { theme } = useTheme();
-  const menuItems = ["Dashboard", "Profile", "Settings", "Help"];
+  const menuItems = ["Dashboard", "Products", "Profile", "Settings", "Help"];
 
   return (
     <aside
