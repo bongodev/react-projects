@@ -51,8 +51,14 @@ const productSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, virtuals: true }
 );
+
+productSchema.virtual("id").get(function () {
+  return this._id.toString();
+});
+
+productSchema.set("toJSON", { virtuals: true });
 
 const Product = mongoose.model("Product", productSchema);
 

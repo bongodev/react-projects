@@ -5,3 +5,10 @@ export const createProduct = async (productData) => {
   await newProduct.save();
   return newProduct;
 };
+
+export const getAllProducts = async () => {
+  const products = await Product.find()
+    .select("id name description createdAt")
+    .sort({ createdAt: -1 });
+  return products;
+};
