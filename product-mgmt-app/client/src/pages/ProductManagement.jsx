@@ -6,10 +6,15 @@ import useProductsLegacy from "../hooks/useProducts";
 
 export default function ProductManagement() {
   const { theme } = useTheme();
-  const { search, getProductByName, totalPrice, handleProductSearch } =
-    useProductsLegacy();
+  const { getProductByName, totalPrice } = useProductsLegacy();
 
-  const { data: products, isLoading, error } = useProductQuery();
+  const {
+    data: products,
+    isLoading,
+    error,
+    search,
+    setSearch,
+  } = useProductQuery();
 
   const isDark = theme === "dark";
 
@@ -73,7 +78,7 @@ export default function ProductManagement() {
               id="search"
               type="text"
               placeholder="Search by name (supports regex patterns)"
-              onChange={handleProductSearch}
+              onChange={(e) => setSearch(e.target.value)}
               className={clsx(
                 "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-colors",
                 {
