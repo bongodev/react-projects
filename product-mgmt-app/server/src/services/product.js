@@ -6,15 +6,18 @@ export const createProduct = async (productData) => {
   return newProduct;
 };
 
-export const getAllProducts = async ({
-  search = "",
-}) => {
-  const products = await Product.find({
-    $or: [
-      { name: { $regex: search, $options: "i" } },
-      { description: { $regex: search, $options: "i" } },
-    ],
-  })
+export const getAllProducts = async ({ search = "" }) => {
+  let query = {};
+  if (search) {
+    query = {
+      $or: [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ],
+    };
+  }
+
+  const products = await Product.find(query)
     .select("id name description price createdAt")
     .sort({ createdAt: -1 });
   return products;
