@@ -6,7 +6,8 @@ export const createProduct = async (req, res) => {
 };
 
 export const getAllProducts = async (req, res) => {
-  res.status(200).json(await productServices.getAllProducts());
+  const { search } = req.query;
+  res.status(200).json(await productServices.getAllProducts({ search }));
 };
 
 export const getProductById = (req, res) => {

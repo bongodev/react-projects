@@ -6,8 +6,15 @@ export const createProduct = async (productData) => {
   return newProduct;
 };
 
-export const getAllProducts = async () => {
-  const products = await Product.find()
+export const getAllProducts = async ({
+  search = "",
+}) => {
+  const products = await Product.find({
+    $or: [
+      { name: { $regex: search, $options: "i" } },
+      { description: { $regex: search, $options: "i" } },
+    ],
+  })
     .select("id name description price createdAt")
     .sort({ createdAt: -1 });
   return products;
