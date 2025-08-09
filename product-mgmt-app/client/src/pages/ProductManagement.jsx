@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 import useTheme from "../hooks/useTheme";
-import useProducts from "../hooks/useProducts";
+import useProductsLegacy from "../hooks/useProductsLegacy";
 
 export default function ProductManagement() {
   const { theme } = useTheme();
@@ -13,7 +13,7 @@ export default function ProductManagement() {
     getProductByName,
     totalPrice,
     handleProductSearch,
-  } = useProducts();
+  } = useProductsLegacy();
 
   const isDark = theme === "dark";
 
