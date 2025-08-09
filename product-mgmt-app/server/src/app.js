@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-app.use(rateLimit);
+app.use(rateLimit({}));
 
 app.use(logger);
 
