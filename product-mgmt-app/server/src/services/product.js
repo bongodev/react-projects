@@ -8,7 +8,7 @@ export const createProduct = async (productData) => {
 
 export const getAllProducts = async () => {
   const products = await Product.find()
-    .select("id name description createdAt")
+    .select("id name description price createdAt")
     .sort({ createdAt: -1 });
   return products;
 };

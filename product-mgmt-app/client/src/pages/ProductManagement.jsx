@@ -1,19 +1,15 @@
 import clsx from "clsx";
 
+import { useProductQuery } from "../api/queries";
 import useTheme from "../hooks/useTheme";
-import useProductsLegacy from "../hooks/useProductsLegacy";
+import useProductsLegacy from "../hooks/useProducts";
 
 export default function ProductManagement() {
   const { theme } = useTheme();
-  const {
-    products,
-    search,
-    isLoading,
-    error,
-    getProductByName,
-    totalPrice,
-    handleProductSearch,
-  } = useProductsLegacy();
+  const { search, getProductByName, totalPrice, handleProductSearch } =
+    useProductsLegacy();
+
+  const { data: products, isLoading, error } = useProductQuery();
 
   const isDark = theme === "dark";
 
@@ -146,7 +142,7 @@ export default function ProductManagement() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products.map((product) => (
                 <div
-                  key={product.name}
+                  key={product._id}
                   className={clsx(
                     "rounded-lg shadow-sm border hover:shadow-md transition-all duration-200 hover:scale-105",
                     {
