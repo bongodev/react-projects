@@ -3,7 +3,7 @@ import express from "express";
 
 import envConfig from "./config/envConfig.js";
 
-import { logger } from "./middlewares/index.js";
+import { logger, rateLimit } from "./middlewares/index.js";
 
 import configureRouters from "./routers/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
@@ -19,6 +19,8 @@ app.use(
     origin: envConfig.ALLOWED_ORIGIN,
   })
 );
+
+app.use(rateLimit);
 
 app.use(logger);
 
