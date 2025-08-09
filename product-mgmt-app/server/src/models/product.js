@@ -60,6 +60,8 @@ productSchema.virtual("id").get(function () {
 
 productSchema.set("toJSON", { virtuals: true });
 
+productSchema.index({ name: "text", description: "text" });
+
 const Product = mongoose.model("Product", productSchema);
 
 export default Product;
