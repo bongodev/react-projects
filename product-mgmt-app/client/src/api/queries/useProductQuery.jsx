@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useDebounce } from "./useDebounce";
-import { productServices } from "../services";
+import { productServices } from "@api/services";
 
 const PRODUCT_QUERY_KEY = "product-query-key";
 

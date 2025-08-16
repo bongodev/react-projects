@@ -1,8 +1,8 @@
 import clsx from "clsx";
 
-import { useProductQuery } from "../api/queries";
-import useTheme from "../hooks/useTheme";
-import useProductsLegacy from "../hooks/useProducts";
+import { useProductQuery } from "@api/queries";
+import useTheme from "@/hooks/useTheme";
+import useProductsLegacy from "@/hooks/useProducts";
 
 export default function ProductManagement() {
   const { theme } = useTheme();

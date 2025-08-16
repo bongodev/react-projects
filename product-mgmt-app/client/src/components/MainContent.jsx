@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import useTheme from "../hooks/useTheme";
+import useTheme from "@/hooks/useTheme";
 
 export default function MainContent() {
   const { theme } = useTheme();

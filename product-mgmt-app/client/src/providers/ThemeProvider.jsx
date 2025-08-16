@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
-import ThemeContext from "../contexts/ThemeContext";
+import ThemeContext from "@/contexts/ThemeContext";
 
 const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
