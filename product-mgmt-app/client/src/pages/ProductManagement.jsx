@@ -1,14 +1,16 @@
 import clsx from "clsx";
 import { PlusCircleIcon } from "lucide-react";
 import { Button } from "@/ui/components/button";
-
+import { useState } from "react";
 import { useProductQuery } from "@api/queries";
 import useTheme from "@/hooks/useTheme";
+import ProductForm from "@/components/products/ProductForm";
 import useProductsLegacy from "@/hooks/useProducts";
 
 export default function ProductManagement() {
   const { theme } = useTheme();
   const { getProductByName, totalPrice } = useProductsLegacy();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const {
     data: products,
@@ -57,11 +59,15 @@ export default function ProductManagement() {
               </p>
             </div>
             <div className="">
-              <Button>
-                <PlusCircleIcon />
+              <Button onClick={() => setIsDrawerOpen(true)}>
+                <PlusCircleIcon className="mr-2 h-4 w-4" />
                 Add Product
               </Button>
             </div>
+            <ProductForm 
+              open={isDrawerOpen} 
+              onOpenChange={setIsDrawerOpen} 
+            />
           </div>
         </div>
 
