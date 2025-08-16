@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { PlusCircleIcon } from "lucide-react";
+import { Button } from "@/ui/components/button";
 
 import { useProductQuery } from "@api/queries";
 import useTheme from "@/hooks/useTheme";
@@ -53,6 +55,12 @@ export default function ProductManagement() {
               >
                 Manage and search through your product inventory
               </p>
+            </div>
+            <div className="">
+              <Button>
+                <PlusCircleIcon />
+                Add Product
+              </Button>
             </div>
           </div>
         </div>
