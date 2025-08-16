@@ -8,7 +8,7 @@ import {
   Dashboard,
   Profile,
   ProductManagement,
-} from "../pages";
+} from "@/pages";
 
 export default function AppRouter() {
   return (

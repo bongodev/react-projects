@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useNavigate } from "react-router";
 
-import useTheme from "../hooks/useTheme";
+import useTheme from "@/hooks/useTheme";
 
 function MenuItem({ item, theme }) {
   const navigate = useNavigate();
