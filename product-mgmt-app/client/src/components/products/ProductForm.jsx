@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Drawer,
   DrawerClose,
@@ -14,29 +16,45 @@ import { Label } from '@/ui/components/label';
 import { Textarea } from '@/ui/components/textarea';
 import { useProductMutation } from '@/api/queries';
 
+const ProductFormSchema = z.object({
+  name: z.string().min(2, 'Product name is required'),
+  price: z
+    .number()
+    .min(0, 'Price must be a positive number')
+    .max(10000000, 'Price seems too high'),
+  description: z.string().optional(),
+  stockQuantity: z.number().min(0, 'Stock quantity must be a positive number'),
+});
+
+const defaultValues = {
+  name: '',
+  price: 0,
+  description: '',
+  stockQuantity: 0,
+};
+
+const FormFieldError = ({ message }) => (
+  <p className="text-sm text-red-600">{message}</p>
+);
+
 export default function ProductForm({ open, onOpenChange }) {
-  const [product, setProduct] = useState({
-    name: '',
-    price: 0,
-    description: '',
-    stockQuantity: 0,
-  });
   const productMutation = useProductMutation();
-
-  const handleOnChange = ({ name, value }) => {
-    setProduct({ ...product, [name]: value });
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    await productMutation.mutateAsync(product);
-    onOpenChange(false);
-  };
+  const from = useForm({
+    resolver: zodResolver(ProductFormSchema),
+    defaultValues,
+  });
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange} direction="right">
       <DrawerContent>
-        <form className="mx-auto w-full max-w-sm" onSubmit={handleFormSubmit}>
+        <form
+          className="mx-auto w-full max-w-sm"
+          onSubmit={from.handleSubmit(async (payload) => {
+            await productMutation.mutateAsync(payload);
+            onOpenChange(false);
+            from.reset();
+          })}
+        >
           <DrawerHeader>
             <DrawerTitle>Add New Product</DrawerTitle>
             <DrawerDescription>
@@ -47,61 +65,46 @@ export default function ProductForm({ open, onOpenChange }) {
             <div className="grid gap-2">
               <Label htmlFor="name">Product Name</Label>
               <Input
-                id="name"
-                name="name"
                 placeholder="Enter product name"
-                onChange={(e) =>
-                  handleOnChange({ name: e.target.name, value: e.target.value })
-                }
-                required
-                value={product.name}
+                {...from.register('name')}
               />
+              {from.formState.errors.name && (
+                <FormFieldError message={from.formState.errors.name.message} />
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="price">Price</Label>
               <Input
-                type="number"
-                id="price"
-                name="price"
                 placeholder="Enter price"
-                min="0"
-                onChange={(e) =>
-                  handleOnChange({
-                    name: e.target.name,
-                    value: parseFloat(e.target.value),
-                  })
-                }
-                value={product.price}
+                {...from.register('price', { valueAsNumber: true })}
               />
+              {from.formState.errors.price && (
+                <FormFieldError message={from.formState.errors.price.message} />
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="description">Description</Label>
               <Textarea
-                id="description"
-                name="description"
                 placeholder="Enter product description"
-                onChange={(e) =>
-                  handleOnChange({ name: e.target.name, value: e.target.value })
-                }
-                value={product.description}
+                {...from.register('description')}
               />
+              {from.formState.errors.description && (
+                <FormFieldError
+                  message={from.formState.errors.description.message}
+                />
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="stockQuantity">Stock Quantity</Label>
               <Input
-                type="number"
-                id="stockQuantity"
-                name="stockQuantity"
                 placeholder="Enter stock quantity"
-                min="0"
-                onChange={(e) =>
-                  handleOnChange({
-                    name: e.target.name,
-                    value: parseInt(e.target.value, 10),
-                  })
-                }
-                value={product.stockQuantity}
+                {...from.register('stockQuantity', { valueAsNumber: true })}
               />
+              {from.formState.errors.stockQuantity && (
+                <FormFieldError
+                  message={from.formState.errors.stockQuantity.message}
+                />
+              )}
             </div>
           </div>
           <DrawerFooter>
