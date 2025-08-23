@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useProductQuery } from "@api/queries";
 import useTheme from "@/hooks/useTheme";
 import ProductForm from "@/components/products/ProductForm";
+import ProductCard from "@/components/products/ProductCard";
 import useProductsLegacy from "@/hooks/useProducts";
 
 export default function ProductManagement() {
@@ -98,7 +99,7 @@ export default function ProductManagement() {
                 {
                   "bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500":
                     isDark,
-                  "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500":
+                  "bg-white border-gray-300 text-gray-900 placeholder-gray-500":
                     !isDark,
                 }
               )}
@@ -160,49 +161,11 @@ export default function ProductManagement() {
           {products.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products.map((product) => (
-                <div
+                <ProductCard
                   key={product._id}
-                  className={clsx(
-                    "rounded-lg shadow-sm border hover:shadow-md transition-all duration-200 hover:scale-105",
-                    {
-                      "bg-gray-800 border-gray-700 hover:border-gray-600":
-                        isDark,
-                      "bg-white border-gray-200 hover:border-gray-300": !isDark,
-                    }
-                  )}
-                >
-                  <div className="p-6">
-                    <h3
-                      className={clsx("text-lg font-semibold mb-2", {
-                        "text-white": isDark,
-                        "text-gray-900": !isDark,
-                      })}
-                    >
-                      {product.name}
-                    </h3>
-                    <div className="flex items-center justify-between">
-                      <span
-                        className={clsx("text-2xl font-bold", {
-                          "text-blue-400": isDark,
-                          "text-blue-600": !isDark,
-                        })}
-                      >
-                        ${product.price?.toFixed(2) || "0.00"}
-                      </span>
-                      <span
-                        className={clsx(
-                          "px-2 py-1 text-xs font-medium rounded-full",
-                          {
-                            "bg-green-900 text-green-300": isDark,
-                            "bg-green-100 text-green-800": !isDark,
-                          }
-                        )}
-                      >
-                        In Stock
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  product={product}
+                  isDark={isDark}
+                />
               ))}
             </div>
           ) : (
