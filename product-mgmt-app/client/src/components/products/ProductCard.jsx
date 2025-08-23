@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export default function ProductCard({ product, isDark }) {
+export default function ProductCard({ product, isDark, onSelect }) {
   return (
     <div
       className={clsx(
@@ -10,6 +10,7 @@ export default function ProductCard({ product, isDark }) {
           "bg-white border-gray-200 hover:border-gray-300": !isDark,
         }
       )}
+      onClick={() => onSelect(product)}
     >
       <div className="p-6">
         <h3

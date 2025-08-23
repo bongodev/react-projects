@@ -1,4 +1,5 @@
-import { productServices } from "../services/index.js";
+import { RouteNotImplementedError } from '../errors/index.js';
+import { productServices } from '../services/index.js';
 
 export const createProduct = async (req, res) => {
   const newProduct = await productServices.createProduct(req.body);
@@ -15,8 +16,9 @@ export const getProductById = (req, res) => {
   res.json({ message: `Product ID: ${productId}` });
 };
 
-export const updateProduct = (req, res) => {
-  throw new RouteNotImplementedError();
+export const updateProduct = async (req, res) => {
+  const product = await productServices.updateProduct(req.body);
+  res.status(200).json(product);
 };
 
 export const deleteProduct = (req, res) => {

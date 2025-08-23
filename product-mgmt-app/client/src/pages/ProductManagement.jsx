@@ -1,16 +1,24 @@
-import clsx from "clsx";
-import { PlusCircleIcon } from "lucide-react";
-import { Button } from "@/ui/components/button";
-import { useState } from "react";
-import { useProductQuery } from "@api/queries";
-import useTheme from "@/hooks/useTheme";
-import ProductForm from "@/components/products/ProductForm";
-import ProductCard from "@/components/products/ProductCard";
-import useProductsLegacy from "@/hooks/useProducts";
+import clsx from 'clsx';
+import { PlusCircleIcon } from 'lucide-react';
+import { Button } from '@/ui/components/button';
+import { useState } from 'react';
+import { useProductQuery } from '@api/queries';
+import useTheme from '@/hooks/useTheme';
+import ProductForm from '@/components/products/ProductForm';
+import ProductCard from '@/components/products/ProductCard';
+import useProductsLegacy from '@/hooks/useProducts';
+
+const defaultValues = {
+  name: '',
+  price: 0,
+  description: '',
+  stockQuantity: 0,
+};
 
 export default function ProductManagement() {
   const { theme } = useTheme();
   const { getProductByName, totalPrice } = useProductsLegacy();
+  const [selectedProduct, setSelectedProduct] = useState(defaultValues);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const {
@@ -21,20 +29,25 @@ export default function ProductManagement() {
     setSearch,
   } = useProductQuery();
 
-  const isDark = theme === "dark";
+  const isDark = theme === 'dark';
 
   // Helper to determine if search result is successful
   const isSearchResultValid =
     search &&
-    getProductByName(search) !== "Product not found" &&
-    getProductByName(search) !== "Enter a search term" &&
-    getProductByName(search) !== "Invalid search pattern";
+    getProductByName(search) !== 'Product not found' &&
+    getProductByName(search) !== 'Enter a search term' &&
+    getProductByName(search) !== 'Invalid search pattern';
+
+  const handleOnSelectProduct = (product) => {
+    setSelectedProduct(product);
+    setIsDrawerOpen(true);
+  };
 
   return (
     <div
-      className={clsx("min-h-screen p-6 transition-colors duration-200", {
-        "bg-gray-900": isDark,
-        "bg-gray-50": !isDark,
+      className={clsx('min-h-screen p-6 transition-colors duration-200', {
+        'bg-gray-900': isDark,
+        'bg-gray-50': !isDark,
       })}
     >
       <div className="max-w-7xl mx-auto">
@@ -43,47 +56,53 @@ export default function ProductManagement() {
           <div className="flex justify-between items-start mb-4">
             <div>
               <h1
-                className={clsx("text-4xl font-bold mb-2", {
-                  "text-white": isDark,
-                  "text-gray-900": !isDark,
+                className={clsx('text-4xl font-bold mb-2', {
+                  'text-white': isDark,
+                  'text-gray-900': !isDark,
                 })}
               >
                 Product Management
               </h1>
               <p
                 className={clsx({
-                  "text-gray-300": isDark,
-                  "text-gray-600": !isDark,
+                  'text-gray-300': isDark,
+                  'text-gray-600': !isDark,
                 })}
               >
                 Manage and search through your product inventory
               </p>
             </div>
             <div className="">
-              <Button onClick={() => setIsDrawerOpen(true)}>
+              <Button
+                onClick={() => {
+                  setSelectedProduct(defaultValues);
+                  setIsDrawerOpen(true);
+                }}
+              >
                 <PlusCircleIcon className="mr-2 h-4 w-4" />
                 Add Product
               </Button>
             </div>
-            <ProductForm 
-              open={isDrawerOpen} 
-              onOpenChange={setIsDrawerOpen} 
+            <ProductForm
+              open={isDrawerOpen}
+              onOpenChange={setIsDrawerOpen}
+              initialData={selectedProduct}
             />
           </div>
         </div>
 
         {/* Search Section */}
         <div
-          className={clsx("rounded-lg shadow-sm border p-6 mb-8", {
-            "bg-gray-800 border-gray-700": isDark,
-            "bg-white border-gray-200": !isDark,
+          className={clsx('rounded-lg shadow-sm border p-6 mb-8', {
+            'bg-gray-800 border-gray-700': isDark,
+            'bg-white border-gray-200': !isDark,
           })}
         >
           <label
             htmlFor="search"
-            className={clsx("block text-sm font-medium mb-2", {
-              "text-gray-200": isDark,
-              "text-gray-700": !isDark,
+            className={clsx('block text-sm font-medium mb-2', {
+              'text-gray-200': isDark,
+              'text-gray-700': !isDark,
             })}
           >
             Search Products
@@ -95,11 +114,11 @@ export default function ProductManagement() {
               placeholder="Search by name (supports regex patterns)"
               onChange={(e) => setSearch(e.target.value)}
               className={clsx(
-                "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-colors",
+                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-colors',
                 {
-                  "bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500":
+                  'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500':
                     isDark,
-                  "bg-white border-gray-300 text-gray-900 placeholder-gray-500":
+                  'bg-white border-gray-300 text-gray-900 placeholder-gray-500':
                     !isDark,
                 }
               )}
@@ -121,24 +140,24 @@ export default function ProductManagement() {
             </div>
           </div>
           <div
-            className={clsx("mt-3 p-3 rounded-md border", {
-              "bg-gray-700 border-gray-600": isDark,
-              "bg-gray-50 border-gray-200": !isDark,
+            className={clsx('mt-3 p-3 rounded-md border', {
+              'bg-gray-700 border-gray-600': isDark,
+              'bg-gray-50 border-gray-200': !isDark,
             })}
           >
             <span
-              className={clsx("text-sm font-medium", {
-                "text-gray-200": isDark,
-                "text-gray-700": !isDark,
+              className={clsx('text-sm font-medium', {
+                'text-gray-200': isDark,
+                'text-gray-700': !isDark,
               })}
             >
-              Search Result:{" "}
+              Search Result:{' '}
             </span>
             <span
-              className={clsx("text-sm", {
-                "text-green-400 font-medium": isSearchResultValid,
-                "text-gray-400": isDark && !isSearchResultValid,
-                "text-gray-500": !isDark && !isSearchResultValid,
+              className={clsx('text-sm', {
+                'text-green-400 font-medium': isSearchResultValid,
+                'text-gray-400': isDark && !isSearchResultValid,
+                'text-gray-500': !isDark && !isSearchResultValid,
               })}
             >
               {getProductByName(search)}
@@ -149,9 +168,9 @@ export default function ProductManagement() {
         {/* Products Grid */}
         <div className="mb-8">
           <h2
-            className={clsx("text-2xl font-semibold mb-4", {
-              "text-white": isDark,
-              "text-gray-900": !isDark,
+            className={clsx('text-2xl font-semibold mb-4', {
+              'text-white': isDark,
+              'text-gray-900': !isDark,
             })}
           >
             Products ({products.length})
@@ -165,15 +184,16 @@ export default function ProductManagement() {
                   key={product._id}
                   product={product}
                   isDark={isDark}
+                  onSelect={handleOnSelectProduct}
                 />
               ))}
             </div>
           ) : (
             <div className="text-center py-12">
               <div
-                className={clsx("mb-4", {
-                  "text-gray-500": isDark,
-                  "text-gray-400": !isDark,
+                className={clsx('mb-4', {
+                  'text-gray-500': isDark,
+                  'text-gray-400': !isDark,
                 })}
               >
                 <svg
@@ -191,17 +211,17 @@ export default function ProductManagement() {
                 </svg>
               </div>
               <h3
-                className={clsx("text-lg font-medium mb-1", {
-                  "text-white": isDark,
-                  "text-gray-900": !isDark,
+                className={clsx('text-lg font-medium mb-1', {
+                  'text-white': isDark,
+                  'text-gray-900': !isDark,
                 })}
               >
                 No products found
               </h3>
               <p
                 className={clsx({
-                  "text-gray-400": isDark,
-                  "text-gray-500": !isDark,
+                  'text-gray-400': isDark,
+                  'text-gray-500': !isDark,
                 })}
               >
                 Add some products to get started.
@@ -212,25 +232,25 @@ export default function ProductManagement() {
 
         {/* Summary Section */}
         <div
-          className={clsx("rounded-lg shadow-sm border p-6", {
-            "bg-gray-800 border-gray-700": isDark,
-            "bg-white border-gray-200": !isDark,
+          className={clsx('rounded-lg shadow-sm border p-6', {
+            'bg-gray-800 border-gray-700': isDark,
+            'bg-white border-gray-200': !isDark,
           })}
         >
           <div className="flex items-center justify-between">
             <div>
               <h3
-                className={clsx("text-lg font-semibold", {
-                  "text-white": isDark,
-                  "text-gray-900": !isDark,
+                className={clsx('text-lg font-semibold', {
+                  'text-white': isDark,
+                  'text-gray-900': !isDark,
                 })}
               >
                 Inventory Summary
               </h3>
               <p
                 className={clsx({
-                  "text-gray-300": isDark,
-                  "text-gray-600": !isDark,
+                  'text-gray-300': isDark,
+                  'text-gray-600': !isDark,
                 })}
               >
                 Total value of all products
@@ -238,17 +258,17 @@ export default function ProductManagement() {
             </div>
             <div className="text-right">
               <div
-                className={clsx("text-3xl font-bold", {
-                  "text-green-400": isDark,
-                  "text-green-600": !isDark,
+                className={clsx('text-3xl font-bold', {
+                  'text-green-400': isDark,
+                  'text-green-600': !isDark,
                 })}
               >
                 ${totalPrice.toFixed(2)}
               </div>
               <div
-                className={clsx("text-sm", {
-                  "text-gray-400": isDark,
-                  "text-gray-500": !isDark,
+                className={clsx('text-sm', {
+                  'text-gray-400': isDark,
+                  'text-gray-500': !isDark,
                 })}
               >
                 {products.length} items
